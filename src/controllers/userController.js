@@ -1,4 +1,23 @@
-const UserModel= require("../models/userModel")
+const jwt = require("jsonwebtoken");
+const userModel = require("../models/bookModel");
+
+const createUser = async function(req, res) {
+    let data = req.body;
+    let savedData = await userModel.create(data);
+    //console.log(req.newAtribute);
+};
+
+const loginUser = async function(req, res) {
+    let userName = req.body.emailId;
+    let password = req.body.password;
+    let user = await userModel.findOne({ emailId: userName, password: password});
+    if(!user)
+     return res.send({
+        status: false,
+        msg: "username or the password is not correct"
+     });
+}
+
 
 
 
@@ -30,7 +49,7 @@ const basicCode= async function(req, res) {
 
 
 
-const createUser= async function (req, res) {
+const upadteUser= async function (req, res) {
     let data= req.body
     let savedData= await UserModel.create(data)
     res.send({msg: savedData})
@@ -41,6 +60,7 @@ const getUsersData= async function (req, res) {
     res.send({msg: allUsers})
 }
 
-module.exports.createUser= createUser
-module.exports.getUsersData= getUsersData
-module.exports.basicCode= basicCode
+module.exports.createUser= createUser;
+module.exports.getUsersData= getUsersData;
+module.exports.upadteUser= upadteUser;
+module.exports.loginUser = loginUser;
